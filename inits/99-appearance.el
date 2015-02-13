@@ -8,7 +8,6 @@
 (setq css-indent-offset 2)
 
 (load-theme 'monokai t)
-(live-set-default-font "Source Code Pro 13")
 (setq default-frame-alist '((font . "Source Code Pro 13")))
 
 (setq-default truncate-lines 1)
