@@ -1,59 +1,131 @@
-;; ;; My Emacs configuration
+(require 'cask "~/.cask/cask.el")
 
-;; (require 'init-loader)
-;; (require 'use-package)
-;; (init-loader-load)
+(cask-initialize)
 
-;; ;; move to js2-mode
+(require 'use-package)
+(require 'init-loader)
+(require 'bind-key)
 
-;; (add-hook 'js2-mode-hook 'my-disable-indent-tabs-mode)
-;; (defun my-disable-indent-tabs-mode ()
-;;   (set-variable 'indent-tabs-mode nil))
+(eval-after-load "sql"
+  '(progn
+     (sql-set-product 'postgres)))
 
-;; (setq mac-command-modifier 'control)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
-;; ;; move to linum mode
-;; (global-linum-mode t)
-;; (setq linum-format
-;;   (lambda (line)
-;;     (propertize
-;;       (format
-;;         (let (
-;;           (w (length
-;;                (number-to-string
-;;                  (count-lines (point-min)
-;;                  (point-max))))))
-;;           (concat "%" (number-to-string w) "d "))
-;;         line)
-;;       'face
-;;       'linum)))
+(use-package scratch)
 
-;; ;; move to projectile
+(use-package uniquify
+  :init
+  (setq uniquify-buffer-name-style 'reverse))
 
-;; (projectile-global-mode)
-;; (setq projectile-completion-system 'grizzl)
-;; (setq projectile-switch-project-action 'projectile-find-dir)
+(use-package smart-mode-line
+  :init
+  (setq sml/no-confirm-load-theme t)
+  (setq sml/theme 'dark)
+  (setq sml/shorten-directory t)
+  :config
+  (sml/setup))
 
-;; ;; move to clojure
-
-;; (define-clojure-indent
-;;   (defroutes 'defun)
-;;   (routes 2)
-;;   (GET 2)
-;;   (POST 2)
-;;   (PUT 2)
-;;   (DELETE 2)
-;;   (HEAD 2)
-;;   (ANY 2)
-;;   (context 2))
+(use-package smex
+  :bind
+  (("M-x" . smex)
+   ("C-x m" . smex)))
 
 
-;; ;; bindings
+(use-package browse-kill-ring
+  :ensure t
+  :config
+  (browse-kill-ring-default-keybindings))
 
-;; (define-key global-map (kbd "C-=") 'er/expand-region)
+; (use-package ido :ensure t)
+; (use-package flx :ensure t)
 
-;; ;; Multiple cursors
-;; (define-key global-map (kbd "C-L") 'mc/edit-lines)
-;; (define-key global-map (kbd "C->") 'mc/mark-next-like-this)
-;; (define-key global-map (kbd "C-<") 'mc/mark-previous-like-this)
-;; (define-key global-map (kbd "C-c C-<") 'mc/mark-all-like-this)
+(use-package flx-ido
+  :ensure t
+  :init
+  (setq ido-enable-flex-matching t)
+  (setq ido-use-faces nil)
+  :config
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (flx-ido-mode 1))
+
+(use-package monokai-theme
+  :ensure t)
+
+(defun my-disable-indent-tabs-mode ()
+  (set-variable 'indent-tabs-mode nil))
+
+(use-package js2-mode
+  :init
+  (add-hook 'js2-mode-hook 'my-disable-indent-tabs-mode))
+
+(use-package linum-relative
+   :init
+   (setq linum-format
+         (lambda (line)
+           (propertize
+            (format
+             (let ((w (length (number-to-string
+                               (count-lines (point-min)
+                                            (point-max))))))
+               (concat "%" (number-to-string w) "d "))
+             line)
+            'face
+            'linum)))
+   :config
+   (global-linum-mode t))
+
+(use-package projectile
+  :init
+  (setq projectile-switch-project-action 'projectile-find-dir)
+  :config
+  (projectile-global-mode))
+
+(use-package perspective
+  :config
+  (persp-mode))
+
+(use-package persp-projectile)
+(use-package clojure-mode)
+
+(use-package cider
+  :config
+  (setq cider-lein-command "/usr/local/bin/lein"))
+
+(use-package paredit)
+(use-package rainbow-delimiters)
+(use-package highlight)
+(use-package mic-paren
+  :config
+  (paren-activate))
+
+(use-package undo-tree)
+
+(use-package ruby-mode)
+(use-package rspec-mode)
+(use-package scss-mode)
+(use-package coffee-mode)
+(use-package slim-mode)
+(use-package markdown-mode)
+(use-package haskell-mode)
+(use-package scala-mode)
+
+
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-last-seen-setup-instructions "1.4.0"))
+
+(use-package dired-details+)
+(use-package volatile-highlights)
+
+(use-package ace-jump-mode
+  :bind ("C-o" . ace-jump-mode))
+
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+
+
+(init-loader-load)

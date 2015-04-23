@@ -4,32 +4,27 @@
 (depends-on "init-loader")
 (depends-on "use-package")
 
-;; Navigation & Selecting etc.
-
 (depends-on "ace-jump-mode")
 (depends-on "browse-kill-ring")
 (depends-on "expand-region")
-(depends-on "multiple-cursors")
 (depends-on "undo-tree")
 (depends-on "scratch")
 (depends-on "volatile-highlights")
-(depends-on "yasnippet")
-(depends-on "highlight-tail")
-(depends-on "quick-jump" :git "https://github.com/jixiuf/quick-jump")
+;; (depends-on "highlight-tail")
+;; (depends-on "quick-jump" :git "https://github.com/jixiuf/quick-jump")
 (depends-on "projectile")
-(depends-on "helm")
-(depends-on "helm-projectile")
-(depends-on "grizzl") ;; I prefer Grizzl to Helm but might eventualy end up with Hel"p
+(depends-on "perspective")
+(depends-on "persp-projectile")
 (depends-on "monokai-theme")
 (depends-on "linum-relative")
-
-;; Version control
+(depends-on "smart-mode-line")
+(depends-on "dired-details+")
+(depends-on "smex")
 
 (depends-on "git-commit-mode")
 (depends-on "magit")
 
-;; Clojure
-
+(depends-on "clojure-mode")
 (depends-on "cider")
 (depends-on "ac-cider")
 (depends-on "fuzzy")
@@ -44,16 +39,9 @@
 (depends-on "auto-complete")
 (depends-on "eval-sexp-fu")
 
-;; Ruby
-
 (depends-on "ruby-mode")
-(depends-on "enh-ruby-mode" :git "https://github.com/zenspider/enhanced-ruby-mode")
 (depends-on "rspec-mode")
 
-;; Lang modes
-
-;; (depends-on "ruby-mode")
-(depends-on "clojure-mode")
 (depends-on "scss-mode")
 (depends-on "coffee-mode")
 (depends-on "slim-mode")
