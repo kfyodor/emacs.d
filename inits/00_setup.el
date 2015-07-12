@@ -2,10 +2,9 @@
   '(progn
      (sql-set-product 'postgres)))
 
-(defun require-dir (dir-name)
-  (add-to-list 'load-path
-               (expand-file-name dir-name user-emacs-directory)))
+(defalias 'yes-or-no-p 'y-or-n-p)
 
+(setq x-select-enable-clipboard t)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
@@ -17,15 +16,14 @@
 
 (add-hook 'before-save-hook 'cleanup-whitespace)
 
-;; More required packages
-(require-dir "lib")
-
-(require 'mic-paren)
-(paren-activate)
-
-(require 'volatile-highlights)
 (volatile-highlights-mode t)
 
-(require 'highlight)
-
 (put 'dired-find-alternate-file 'disabled nil)
+
+(set-language-environment 'utf-8)
+(set-default-coding-systems 'utf-8)
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)

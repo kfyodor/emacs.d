@@ -37,4 +37,5 @@
 (depends-on "markdown-mode")
 (depends-on "haskell-mode")
 
+(depends-on "idomenu")
 (depends-on "indent-guide")

@@ -5,16 +5,14 @@
 (require 'use-package)
 (require 'init-loader)
 
-; (use-package win-switch
-;   :ensure t)
+(add-to-list 'load-path
+               (expand-file-name "lib" user-emacs-directory))
 
-(use-package diff-hl)
-
-(use-package uniquify
-  :init
-  (setq uniquify-buffer-name-style 'reverse))
+(use-package diff-hl
+  :ensure t)
 
 (use-package smart-mode-line
+  :ensure t
   :init
   (setq sml/no-confirm-load-theme t)
   (setq sml/theme 'dark)
@@ -23,6 +21,7 @@
   (sml/setup))
 
 (use-package smex
+  :ensure t
   :bind
   (("M-x" . smex)
    ("C-x m" . smex)))
@@ -30,16 +29,21 @@
 
 (use-package browse-kill-ring
   :ensure t
+  :ensure t
   :config (browse-kill-ring-default-keybindings))
 
+(use-package idomenu)
 (use-package flx-ido
   :ensure t
   :init
+  (setq ido-create-new-buffer 'always)
   (setq ido-enable-flex-matching t)
-  (setq ido-use-faces nil)
+  (setq ido-default-file-method 'selected-window)
+  ;(setq ido-use-faces nil)
   (add-to-list 'ido-ignore-files "\\.DS_Store")
   :config
   (ido-mode 1)
+  (icomplete-mode 1)
   (ido-everywhere 1)
   (flx-ido-mode 1))
 
@@ -54,28 +58,36 @@
   (add-hook 'js2-mode-hook 'my-disable-indent-tabs-mode))
 
 (use-package projectile
+  :ensure t
   :init
   (setq projectile-switch-project-action 'projectile-dired)
   :config
   (projectile-global-mode))
 
-(use-package perspective
-  :config
-  (persp-mode))
+; (use-package perspective
+;   :ensure t
+;   :config
+;   (persp-mode))
 
-(use-package persp-projectile)
+; (use-package persp-projectile)
 
-(use-package clojure-mode)
+(use-package clojure-mode
+  :ensure t)
 
 (use-package cider
+  :ensure t
   :config
   (setq cider-lein-command "/usr/local/bin/lein")
   (setq cider-boot-commant "/usr/local/bin/boot"))
 
-(use-package paredit)
-(use-package rainbow-delimiters)
+(use-package paredit
+  :ensure t)
 
-(use-package undo-tree)
+(use-package rainbow-delimiters
+  :ensure t)
+
+(use-package undo-tree
+  :ensure t)
 
 (use-package ruby-mode)
 (use-package rspec-mode)
@@ -99,5 +111,37 @@
 
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
+
+(require 'mic-paren)
+(paren-activate)
+
+(require 'volatile-highlights)
+(volatile-highlights-mode t)
+
+(require 'highlight)
+
+(use-package win-switch
+  :ensure t
+  :config
+  (setq win-switch-feedback-background-color "DeepPink3")
+  (setq win-switch-feedback-foreground-color "black")
+  (setq win-switch-window-threshold 1)
+  (setq win-switch-idle-time 0.7)
+  (win-switch-set-keys '() 'up)
+  (win-switch-set-keys '() 'down)
+  (win-switch-set-keys '() 'left)
+  (win-switch-set-keys '() 'right)
+  (win-switch-set-keys '("o") 'next-window)
+  (win-switch-set-keys '("p") 'previous-window)
+  (win-switch-set-keys '() 'enlarge-vertically)
+  (win-switch-set-keys '() 'shrink-vertically)
+  (win-switch-set-keys '() 'shrink-horizontally)
+  (win-switch-set-keys '() 'enlarge-horizontally)
+  (win-switch-set-keys '() 'other-frame)
+  (win-switch-set-keys '("C-g") 'exit)
+  (win-switch-set-keys '() 'split-horizontally)
+  (win-switch-set-keys '() 'split-vertically)
+  (win-switch-set-keys '() 'delete-window)
+  (win-switch-set-keys '("\M-\C-g") 'emergency-exit))
 
 (init-loader-load)
