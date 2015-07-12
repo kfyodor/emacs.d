@@ -1,4 +1,5 @@
 .cask
 auto-save-list
-projectile-bookmarks.eld
+projectile*
 .#*
+.DS_Store

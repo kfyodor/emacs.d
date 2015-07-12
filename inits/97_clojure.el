@@ -27,3 +27,16 @@
                      (0 (progn (compose-region (match-beginning 1)
                                                (match-end 1) "∈")
                                nil))))))
+
+(add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
+
+(define-clojure-indent
+  (defroutes 'defun)
+  (routes 2)
+  (GET 2)
+  (POST 2)
+  (PUT 2)
+  (DELETE 2)
+  (HEAD 2)
+  (ANY 2)
+  (context 2))
