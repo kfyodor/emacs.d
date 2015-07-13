@@ -154,4 +154,8 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
 
+(use-package haml-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode)))
+
 (init-loader-load)

@@ -44,3 +44,4 @@
 
 (depends-on "ag")
 (depends-on "yaml-mode")
+(depends-on "haml-mode")
