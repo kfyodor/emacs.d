@@ -8,6 +8,8 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
+(delete-selection-mode 1)
+
 (defvar ignore-whitespace-modes '(markdown-mode))
 (defun cleanup-whitespace ()
   (if (not (member major-mode ignore-whitespace-modes))

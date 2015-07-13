@@ -37,5 +37,10 @@
 (depends-on "markdown-mode")
 (depends-on "haskell-mode")
 
+(depends-on "smartparens")
+
 (depends-on "idomenu")
 (depends-on "indent-guide")
+
+(depends-on "ag")
+(depends-on "yaml-mode")

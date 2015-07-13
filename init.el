@@ -83,6 +83,10 @@
 (use-package paredit
   :ensure t)
 
+(use-package smartparens
+  :init
+  (add-hook 'ruby-mode-hook 'smartparens-mode))
+
 (use-package rainbow-delimiters
   :ensure t)
 
@@ -143,5 +147,11 @@
   (win-switch-set-keys '() 'split-vertically)
   (win-switch-set-keys '() 'delete-window)
   (win-switch-set-keys '("\M-\C-g") 'emergency-exit))
+
+(use-package ag)
+
+(use-package yaml-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
 
 (init-loader-load)
