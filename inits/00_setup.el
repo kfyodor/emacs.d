@@ -29,3 +29,20 @@
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+
+(custom-set-variables '(coffee-tab-width 2))
+
+(global-linum-mode t)
+(setq linum-format
+  (lambda (line)
+    (propertize
+      (format
+        (let (
+          (w (length
+               (number-to-string
+                 (count-lines (point-min)
+                 (point-max))))))
+          (concat "%" (number-to-string w) "d "))
+        line)
+      'face
+      'linum)))
