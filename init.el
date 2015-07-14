@@ -158,4 +158,10 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode)))
 
+(use-package indent-guide)
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
 (init-loader-load)

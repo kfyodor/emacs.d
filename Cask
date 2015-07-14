@@ -40,8 +40,13 @@
 (depends-on "smartparens")
 
 (depends-on "idomenu")
-(depends-on "indent-guide")
+
+(depends-on "indent-guide"
+	    :git
+	    "https://github.com/zk-phi/indent-guide")
 
 (depends-on "ag")
 (depends-on "yaml-mode")
 (depends-on "haml-mode")
+
+(depends-on "company")
