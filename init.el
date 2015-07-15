@@ -6,7 +6,7 @@
 (require 'init-loader)
 
 (add-to-list 'load-path
-               (expand-file-name "lib" user-emacs-directory))
+	     (expand-file-name "lib" user-emacs-directory))
 
 (use-package diff-hl
   :ensure t)
@@ -110,8 +110,27 @@
 
 (use-package magit
   :ensure t
-  :config
+  :init
   (setq magit-last-seen-setup-instructions "1.4.0"))
+
+(use-package git-gutter
+  :ensure t
+  :init
+  ;(setq git-gutter:window-width 2)
+  ;(setq git-gutter:modified-sign "~ ")
+  ;(setq git-gutter:added-sign "+ ")
+  ;(setq git-gutter:deleted-sign "- ")
+  ;(setq git-gutter:lighter " G-+")
+  ;(setq git-gutter:unchanged-sign "  ")
+  )
+
+(use-package git-gutter-fringe
+  :ensure t
+  :init
+  (setq-default indicate-buffer-boundaries 'left)
+  ;(setq-default indicate-empty-lines +1)
+  :config
+  (global-git-gutter-mode +1))
 
 (use-package ace-jump-mode
   :bind ("C-o" . ace-jump-mode))

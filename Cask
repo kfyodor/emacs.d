@@ -19,6 +19,8 @@
 (depends-on "smart-mode-line")
 (depends-on "smex")
 (depends-on "magit")
+(depends-on "git-gutter")
+(depends-on "git-gutter-fringe")
 (depends-on "clojure-mode")
 (depends-on "cider")
 (depends-on "fuzzy")
