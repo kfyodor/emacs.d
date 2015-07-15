@@ -95,7 +95,10 @@
 
 (use-package ruby-mode)
 (use-package rspec-mode)
-(use-package scss-mode)
+(use-package scss-mode
+  :init
+  (setq scss-compile-at-save nil))
+
 (use-package coffee-mode)
 (use-package slim-mode)
 (use-package markdown-mode)
