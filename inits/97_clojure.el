@@ -1,3 +1,10 @@
+(defun custom-clojure-mode-hook ()
+  (clj-refactor-mode 1)
+  (yas-minor-mode 1)
+  (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'custom-clojure-mode-hook)
+
 ;; Grabbed from Emacs Live
 
 (dolist (x '(scheme emacs-lisp lisp clojure))
@@ -39,4 +46,6 @@
   (DELETE 2)
   (HEAD 2)
   (ANY 2)
-  (context 2))
+  (context 2)
+  (go-let 2)
+  (go-loop 2))

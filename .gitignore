@@ -1,5 +1,6 @@
 .cask
 auto-save-list
 projectile*
+tramp
 .#*
 .DS_Store
