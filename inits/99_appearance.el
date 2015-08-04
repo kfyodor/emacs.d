@@ -3,18 +3,9 @@
 (tool-bar-mode -1)
 (setq inhibit-startup-message t)
 (setq echo-keystrokes 0.1)
-(add-to-list 'default-frame-alist '(width . 174))
-(add-to-list 'default-frame-alist '(height . 48))
 
-(defvar parameters)
-
-(add-hook 'before-make-frame-hook
-  (lambda ()
-    (let ((left (cdr (assq 'left (frame-parameters))))
-      (top (cdr (assq 'top (frame-parameters)))))
-      (setq parameters (cons (cons 'left (+ left 0))
-                     (cons (cons 'top (+ top 0))
-                       parameters))))))
+(add-to-list 'initial-frame-alist '(width . 174))
+(add-to-list 'initial-frame-alist '(height . 48))
 
 (setq c-basic-offset 2)
 (setq css-indent-offset 2)

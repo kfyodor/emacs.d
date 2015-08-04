@@ -119,6 +119,7 @@
   :ensure t
   :init
   (setq magit-last-seen-setup-instructions "1.4.0")
+  (setq magit-status-buffer-switch-function 'switch-to-buffer)
   :config
   (add-hook 'magit-log-edit-mode-hook
 	    (lambda ()
@@ -133,17 +134,8 @@
   (setq git-gutter:added-sign "+ ")
   (setq git-gutter:deleted-sign "- ")
   (setq git-gutter:lighter " G-+")
-  ;; (setq git-gutter:unchanged-sign "  ")
   (global-git-gutter-mode t)
   (git-gutter:linum-setup))
-
-;; (use-package git-gutter-fringe
-;;   :ensure t
-;;   :init
-;;   (setq-default indicate-buffer-boundaries 'left)
-;;   ;(setq-default indicate-empty-lines +1)
-;;   :config
-;;   (global-git-gutter-mode +1))
 
 (use-package ace-jump-mode
   :bind ("C-o" . ace-jump-mode))
