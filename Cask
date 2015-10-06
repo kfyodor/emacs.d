@@ -1,5 +1,7 @@
 (source gnu)
-(source melpa-stable)
+(source melpa)
+
+(depends-on "exec-path-from-shell")
 
 (depends-on "init-loader")
 (depends-on "use-package")
@@ -30,7 +32,6 @@
 (depends-on "eval-sexp-fu")
 (depends-on "cyberpunk-theme")
 
-(depends-on "ruby-mode")
 (depends-on "rspec-mode")
 (depends-on "scss-mode")
 (depends-on "coffee-mode")
@@ -38,6 +39,9 @@
 (depends-on "js2-mode")
 (depends-on "markdown-mode")
 (depends-on "haskell-mode")
+
+(depends-on "scala-mode2")
+(depends-on "ensime")
 
 (depends-on "smartparens")
 

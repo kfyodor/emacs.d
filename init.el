@@ -8,6 +8,10 @@
 (add-to-list 'load-path
 	     (expand-file-name "lib" user-emacs-directory))
 
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
 (use-package diff-hl
   :ensure t)
 
@@ -100,7 +104,6 @@
 (use-package undo-tree
   :ensure t)
 
-(use-package ruby-mode)
 (use-package rspec-mode)
 (use-package scss-mode
   :init
@@ -108,6 +111,7 @@
 
 (use-package coffee-mode)
 (use-package slim-mode)
+
 (use-package markdown-mode)
 (use-package haskell-mode)
 
@@ -176,6 +180,7 @@
   (win-switch-set-keys '("\M-\C-g") 'emergency-exit))
 
 (use-package ag)
+(use-package livedown)
 
 (use-package yaml-mode
   :config

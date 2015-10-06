@@ -9,8 +9,8 @@
 (setq auto-save-default nil)
 
 ;; Force splitting windows horizontally
-(setq split-height-threshold nil)
-(setq split-width-threshold 0)
+;; (setq split-height-threshold nil)
+;; (setq split-width-threshold 0)
 
 (delete-selection-mode 1)
 
