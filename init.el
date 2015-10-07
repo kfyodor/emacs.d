@@ -72,13 +72,6 @@
   :config
   (projectile-global-mode))
 
-; (use-package perspective
-;   :ensure t
-;   :config
-;   (persp-mode))
-
-; (use-package persp-projectile)
-
 (use-package clojure-mode
   :ensure t)
 
@@ -96,7 +89,8 @@
 
 (use-package smartparens
   :init
-  (add-hook 'ruby-mode-hook 'smartparens-mode))
+  (add-hook 'ruby-mode-hook 'smartparens-mode)
+  (add-hook 'scala-mode-hook 'smartparens-mode))
 
 (use-package rainbow-delimiters
   :ensure t)

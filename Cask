@@ -16,8 +16,6 @@
 (depends-on "undo-tree")
 
 (depends-on "projectile")
-(depends-on "perspective")
-(depends-on "persp-projectile")
 (depends-on "linum-relative")
 (depends-on "smart-mode-line")
 (depends-on "smex")

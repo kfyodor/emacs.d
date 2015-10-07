@@ -2,5 +2,6 @@
 auto-save-list
 projectile*
 tramp
+ensime
 .#*
 .DS_Store
