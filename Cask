@@ -8,6 +8,8 @@
 
 (depends-on "win-switch")
 
+(depends-on "yasnippet")
+
 (depends-on "ace-jump-mode")
 (depends-on "browse-kill-ring")
 (depends-on "expand-region")
@@ -41,6 +43,7 @@
 (depends-on "haskell-mode")
 
 (depends-on "scala-mode2")
+(depends-on "sbt-mode")
 (depends-on "ensime")
 
 (depends-on "smartparens")

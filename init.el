@@ -196,4 +196,15 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package scala-mode2)
+(use-package sbt-mode)
+
+(use-package ensime
+  :config
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
+
+(use-package yasnippet
+  :config
+  (add-hook 'prog-mode-hook #'yas-minor-mode))
+
 (init-loader-load)
