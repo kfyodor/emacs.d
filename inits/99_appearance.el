@@ -4,8 +4,8 @@
 (setq inhibit-startup-message t)
 (setq echo-keystrokes 0.1)
 
-(add-to-list 'initial-frame-alist '(width . 174))
-(add-to-list 'initial-frame-alist '(height . 48))
+(add-to-list 'initial-frame-alist '(width . 176))
+(add-to-list 'initial-frame-alist '(height . 54))
 
 (setq c-basic-offset 2)
 (setq css-indent-offset 2)
@@ -15,7 +15,14 @@
 (setq init-loader-show-log-after-init nil)
 
 (load-theme 'cyberpunk t)
-(setq default-frame-alist '((font . "Source Code Pro 13")))
+
+; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
+(when (window-system)
+  (set-default-font "Fira Code 13"))
+
+(when (functionp 'mac-auto-operator-composition-mode)
+  (setq mac-auto-operator-composition-characters "!\"#$%&'*+,-/:;<=>?@^_`|~.")
+  (mac-auto-operator-composition-mode))
 
 (global-hl-line-mode 1)
 

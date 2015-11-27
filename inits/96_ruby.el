@@ -1,5 +1,6 @@
 (setq ruby-deep-arglist nil)
 (setq ruby-deep-indent-paren nil)
+(setq ruby-insert-encoding-magic-comment nil)
 
 (defadvice ruby-indent-line (after unindent-closing-paren activate)
   (let ((column (current-column))

@@ -35,10 +35,13 @@
 (depends-on "rspec-mode")
 (depends-on "scss-mode")
 (depends-on "coffee-mode")
+(depends-on "jsx-mode")
 (depends-on "slim-mode")
 (depends-on "js2-mode")
 (depends-on "markdown-mode")
+
 (depends-on "haskell-mode")
+(depends-on "hi2")
 
 (depends-on "scala-mode2")
 (depends-on "sbt-mode")

@@ -79,10 +79,15 @@
   :ensure t)
 
 (use-package cider
+  :init
+  (add-hook 'clojure-mode-hook #'cider-mode)
   :ensure t
   :config
   (setq cider-lein-command "/usr/local/bin/lein")
-  (setq cider-boot-commant "/usr/local/bin/boot"))
+  (setq cider-boot-commant "/usr/local/bin/boot")
+  (add-hook 'cider-repl-mode-hook #'paredit-mode)
+  (cider-repl-toggle-pretty-printing)
+  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
 (use-package paredit
   :ensure t)
@@ -107,7 +112,15 @@
 (use-package slim-mode)
 
 (use-package markdown-mode)
-(use-package haskell-mode)
+
+(use-package haskell-mode
+  :config
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode))
+
+;; (use-package hi2
+;;   :ensure t
+;;   :config
+;;   (add-hook 'haskell-mode-hook 'turn-on-hi2))
 
 (use-package indent-guide
   :init
