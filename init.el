@@ -157,7 +157,8 @@
 (use-package mic-paren
   :config
   (paren-activate)
-  (set-face-background 'paren-face-match "DeepPink3"))
+  (add-hook 'after-init-hook
+	    (lambda () (set-face-background 'paren-face-match "DeepPink3"))))
 
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
@@ -200,6 +201,7 @@
   (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode)))
 
 (use-package indent-guide)
+
 (use-package company
   :ensure t
   :config
@@ -214,6 +216,8 @@
 
 (use-package yasnippet
   :config
-  (add-hook 'prog-mode-hook #'yas-minor-mode))
+  (yas-global-mode 1)
+  ;(add-hook 'prog-mode-hook #'yas-minor-mode)
+  )
 
 (init-loader-load)
