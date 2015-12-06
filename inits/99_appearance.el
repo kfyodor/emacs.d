@@ -4,8 +4,11 @@
 (setq inhibit-startup-message t)
 (setq echo-keystrokes 0.1)
 
-(add-to-list 'initial-frame-alist '(width . 176))
-(add-to-list 'initial-frame-alist '(height . 54))
+;; (add-to-list 'initial-frame-alist '(width . 176))
+;; (add-to-list 'initial-frame-alist '(height . 54))
+
+;; works only with emacs-mac
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (setq c-basic-offset 2)
 (setq css-indent-offset 2)
@@ -32,4 +35,4 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (set-fringe-mode '(4 . 0))
-(setq-default truncate-lines 1)
+(setq-default truncate-lines t)

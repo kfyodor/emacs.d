@@ -28,7 +28,8 @@
 (depends-on "fuzzy")
 (depends-on "rainbow-delimiters")
 (depends-on "paredit")
-(depends-on "auto-complete")
+(depends-on "mic-paren")
+;; (depends-on "auto-complete")
 (depends-on "eval-sexp-fu")
 (depends-on "cyberpunk-theme")
 

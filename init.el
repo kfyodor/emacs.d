@@ -22,8 +22,8 @@
   (setq sml/theme 'dark)
   (setq sml/shorten-directory t)
   (setq sml/shorten-modes t)
-  (add-to-list 'sml/replacer-regexp-list '("^~/apps" ":a:") t)
   :config
+  (add-to-list 'sml/replacer-regexp-list '("^~/apps" ":a:") t)
   (sml/setup))
 
 (use-package smex
@@ -154,8 +154,10 @@
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
-(require 'mic-paren)
-(paren-activate)
+(use-package mic-paren
+  :config
+  (paren-activate)
+  (set-face-background 'paren-face-match "DeepPink3"))
 
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
