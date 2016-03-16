@@ -52,12 +52,18 @@
 
 (depends-on "idomenu")
 
+(depends-on "ido-vertical-mode")
+
 (depends-on "indent-guide"
 	    :git
 	    "https://github.com/zk-phi/indent-guide")
+
+(depends-on "sql-indent")
 
 (depends-on "ag")
 (depends-on "yaml-mode")
 (depends-on "haml-mode")
 
 (depends-on "company")
+
+(depends-on "dockerfile-mode")

@@ -53,7 +53,8 @@
   (ido-mode t)
   (icomplete-mode 1)
   (ido-everywhere 1)
-  (flx-ido-mode 1))
+  (flx-ido-mode 1)
+  (ido-vertical-mode 1))
 
 (use-package cyberpunk-theme
   :ensure t)
@@ -219,5 +220,10 @@
   (yas-global-mode 1)
   ;(add-hook 'prog-mode-hook #'yas-minor-mode)
   )
+
+(use-package sql-indent
+  :config
+  (eval-after-load "sql"
+    '(load-library "sql-indent")))
 
 (init-loader-load)

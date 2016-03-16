@@ -48,4 +48,5 @@
   (ANY 2)
   (context 2)
   (go-let 2)
-  (go-loop 2))
+  (go-loop 2)
+  (match 2))
