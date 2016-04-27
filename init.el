@@ -227,3 +227,4 @@
     '(load-library "sql-indent")))
 
 (init-loader-load)
+(put 'downcase-region 'disabled nil)
