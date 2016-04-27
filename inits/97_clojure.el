@@ -7,11 +7,12 @@
 
 ;; Grabbed from Emacs Live
 
-(dolist (x '(scheme emacs-lisp lisp clojure))
-  (add-hook (intern (concat (symbol-name x) "-mode-hook")) 'enable-paredit-mode)
-  (add-hook (intern (concat (symbol-name x) "-mode-hook")) 'rainbow-delimiters-mode))
+(dolist (x '(scheme emacs-lisp lisp clojure clojurescript))
+  (add-hook (intern (concat (symbol-name x) "-mode-hook")) #'paredit-mode)
+  (add-hook (intern (concat (symbol-name x) "-mode-hook")) #'rainbow-delimiters-mode)
+  (add-hook (intern (concat (symbol-name x) "-mode-hook")) #'aggressive-indent-mode))
 
-(setq auto-mode-alist (append '(("\\.cljs$" . clojure-mode))
+(setq auto-mode-alist (append '(("\\.cljs$" . clojurescript-mode))
                                  auto-mode-alist))
 
 (eval-after-load 'clojure-mode
