@@ -52,12 +52,16 @@
         (ensime               . "melpa")))
 
 (package-initialize)
-(package-refresh-contents)
+(setq package-contents-refreshed nil)
 
 (mapc (lambda (pinned-package)
 	(let ((package (car pinned-package))
 	      (archive (cdr pinned-package)))
 	  (unless (package-installed-p package)
+            (unless package-contents-refreshed
+              (setq package-contents-refreshed 
+                (package-refresh-contents)
+                t))
 	    (message "Installing %s from %s" package archive)
 	    (package-install package))))
       package-pinned-packages)
@@ -140,6 +144,7 @@
   :config
   (setq cider-lein-command "/usr/local/bin/lein")
   (setq cider-boot-commant "/usr/local/bin/boot")
+  (setq cider-repl-display-help-banner nil)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (cider-repl-toggle-pretty-printing)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
