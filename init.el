@@ -1,22 +1,80 @@
-(require 'cask "~/.cask/cask.el")
+(require 'cl)
+(require 'package)
 
-(cask-initialize)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+(setq package-pinned-packages
+      '((init-loader          . "melpa-stable")
+        (exec-path-from-shell . "melpa-stable")
+        (diff-hl              . "melpa-stable")
+        (smart-mode-line      . "melpa-stable")
+        (smex                 . "melpa-stable")
+        (browse-kill-ring     . "melpa-stable")
+        (ido-vertical-mode    . "melpa-stable")
+        (flx-ido              . "melpa-stable")
+        (js2-mode             . "melpa-stable")
+        (projectile           . "melpa-stable")
+        (clojure-mode         . "melpa-stable")
+        (clj-refactor         . "melpa-stable")
+        (cider                . "melpa-stable")
+        (paredit              . "melpa-stable")
+        (smartparens          . "melpa-stable")
+        (rainbow-delimiters   . "melpa-stable")
+        (rspec-mode           . "melpa-stable")
+        (scss-mode            . "melpa-stable")
+        (coffee-mode          . "melpa-stable")
+        (slim-mode            . "melpa-stable")
+        (markdown-mode        . "melpa-stable")
+        (haskell-mode         . "melpa-stable")
+        (hi2                  . "melpa-stable")
+        (magit                . "melpa-stable")
+        (git-gutter           . "melpa-stable")
+        (ace-jump-mode        . "melpa-stable")
+        (expand-region        . "melpa-stable")
+        (mic-paren            . "melpa-stable")
+        (win-switch           . "melpa-stable")
+        (ag                   . "melpa-stable")
+        (yaml-mode            . "melpa-stable")
+        (haml-mode            . "melpa-stable")
+        (company              . "melpa-stable")
+        (scala-mode2          . "melpa-stable")
+        (sbt-mode             . "melpa-stable")
+        (yasnippet            . "melpa-stable")
+        (idomenu              . "melpa-stable")
+        (aggressive-indent    . "melpa-stable")
+
+        (sql-indent           . "melpa")
+        (use-package          . "melpa")
+        (undo-tree            . "melpa")
+        (indent-guide         . "melpa")
+        (highlight            . "melpa")
+        (ensime               . "melpa")))
+
+(package-initialize)
+(package-refresh-contents)
+
+(mapc (lambda (pinned-package)
+	(let ((package (car pinned-package))
+	      (archive (cdr pinned-package)))
+	  (unless (package-installed-p package)
+	    (message "Installing %s from %s" package archive)
+	    (package-install package))))
+      package-pinned-packages)
+
+(add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
 
 (require 'use-package)
-(require 'init-loader)
 
-(add-to-list 'load-path
-	     (expand-file-name "lib" user-emacs-directory))
+(use-package init-loader)
 
 (use-package exec-path-from-shell
   :config
   (exec-path-from-shell-initialize))
 
-(use-package diff-hl
-  :ensure t)
+(use-package diff-hl)
 
 (use-package smart-mode-line
-  :ensure t
   :init
   (setq sml/no-confirm-load-theme t)
   (setq sml/theme 'dark)
@@ -27,27 +85,24 @@
   (sml/setup))
 
 (use-package smex
-  :ensure t
   :bind
   (("M-x" . smex)
    ("C-x m" . smex)))
 
-
 (use-package browse-kill-ring
-  :ensure t
-  :ensure t
   :config (browse-kill-ring-default-keybindings))
 
 (use-package idomenu)
+
+(use-package ido-vertical-mode)
+
 (use-package flx-ido
-  :ensure t
   :init
   (setq ido-create-new-buffer 'always)
   (setq ido-enable-flex-matching t)
   (setq ido-enable-prefix nil)
   (setq ido-max-prospects 8)
   (setq ido-default-file-method 'selected-window)
-  ;(setq ido-use-faces nil)
   (add-to-list 'ido-ignore-files "\\.DS_Store")
   :config
   (ido-mode t)
@@ -56,33 +111,32 @@
   (flx-ido-mode 1)
   (ido-vertical-mode 1))
 
-(use-package cyberpunk-theme
-  :ensure t)
+(require 'cyberpunk-theme)
 
 (defun my-disable-indent-tabs-mode ()
   (set-variable 'indent-tabs-mode nil))
+
+(add-hook 'prog-mode-hook 'my-disable-indent-tabs-mode)
 
 (use-package js2-mode
   :init
   (add-hook 'js2-mode-hook 'my-disable-indent-tabs-mode))
 
 (use-package projectile
-  :ensure t
   :init
   (setq projectile-switch-project-action 'projectile-dired)
   :config
   (projectile-global-mode))
 
-(use-package clojure-mode
-  :ensure t)
+(use-package clojure-mode)
 
-(use-package clj-refactor
-  :ensure t)
+(use-package aggressive-indent)
+
+(use-package clj-refactor)
 
 (use-package cider
   :init
   (add-hook 'clojure-mode-hook #'cider-mode)
-  :ensure t
   :config
   (setq cider-lein-command "/usr/local/bin/lein")
   (setq cider-boot-commant "/usr/local/bin/boot")
@@ -90,26 +144,25 @@
   (cider-repl-toggle-pretty-printing)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
-(use-package paredit
-  :ensure t)
+(use-package paredit)
 
 (use-package smartparens
   :init
   (add-hook 'ruby-mode-hook 'smartparens-mode)
   (add-hook 'scala-mode-hook 'smartparens-mode))
 
-(use-package rainbow-delimiters
-  :ensure t)
+(use-package rainbow-delimiters)
 
-(use-package undo-tree
-  :ensure t)
+(use-package undo-tree)
 
 (use-package rspec-mode)
+
 (use-package scss-mode
   :init
   (setq scss-compile-at-save nil))
 
 (use-package coffee-mode)
+
 (use-package slim-mode)
 
 (use-package markdown-mode)
@@ -118,17 +171,15 @@
   :config
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode))
 
-;; (use-package hi2
-;;   :ensure t
-;;   :config
-;;   (add-hook 'haskell-mode-hook 'turn-on-hi2))
+(use-package hi2
+  :config
+  (add-hook 'haskell-mode-hook 'turn-on-hi2))
 
 (use-package indent-guide
   :init
   (setq indent-guide-recursive t))
 
 (use-package magit
-  :ensure t
   :init
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
@@ -139,7 +190,6 @@
 	      (auto-fill-mode 1))))
 
 (use-package git-gutter
-  :ensure t
   :init
   (setq git-gutter:window-width 2)
   (setq git-gutter:modified-sign "~ ")
@@ -164,10 +214,9 @@
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
 
-(require 'highlight)
+(use-package highlight)
 
 (use-package win-switch
-  :ensure t
   :config
   (setq win-switch-feedback-background-color "DeepPink3")
   (setq win-switch-feedback-foreground-color "black")
@@ -191,7 +240,8 @@
   (win-switch-set-keys '("\M-\C-g") 'emergency-exit))
 
 (use-package ag)
-(use-package livedown)
+
+(require 'livedown)
 
 (use-package yaml-mode
   :config
@@ -201,10 +251,7 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode)))
 
-(use-package indent-guide)
-
 (use-package company
-  :ensure t
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
@@ -213,15 +260,16 @@
 
 (use-package ensime
   :config
-  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  :pin melpa)
 
 (use-package yasnippet
   :config
   (yas-global-mode 1)
-  ;(add-hook 'prog-mode-hook #'yas-minor-mode)
-  )
+  (add-hook 'prog-mode-hook #'yas-minor-mode))
 
 (use-package sql-indent
+  :pin melpa
   :config
   (eval-after-load "sql"
     '(load-library "sql-indent")))
