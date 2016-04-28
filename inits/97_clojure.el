@@ -10,7 +10,8 @@
 (dolist (x '(scheme emacs-lisp lisp clojure clojurescript))
   (add-hook (intern (concat (symbol-name x) "-mode-hook")) #'paredit-mode)
   (add-hook (intern (concat (symbol-name x) "-mode-hook")) #'rainbow-delimiters-mode)
-  (add-hook (intern (concat (symbol-name x) "-mode-hook")) #'aggressive-indent-mode))
+  ;(add-hook (intern (concat (symbol-name x) "-mode-hook")) #'aggressive-indent-mode)
+  )
 
 (setq auto-mode-alist (append '(("\\.cljs$" . clojurescript-mode))
                                  auto-mode-alist))

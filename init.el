@@ -42,7 +42,7 @@
         (sbt-mode             . "melpa-stable")
         (yasnippet            . "melpa-stable")
         (idomenu              . "melpa-stable")
-        (aggressive-indent    . "melpa-stable")
+        ;(aggressive-indent    . "melpa-stable")
 
         (sql-indent           . "melpa")
         (use-package          . "melpa")
@@ -59,7 +59,7 @@
 	      (archive (cdr pinned-package)))
 	  (unless (package-installed-p package)
             (unless package-contents-refreshed
-              (setq package-contents-refreshed 
+              (setq package-contents-refreshed
                 (package-refresh-contents)
                 t))
 	    (message "Installing %s from %s" package archive)
@@ -134,7 +134,7 @@
 
 (use-package clojure-mode)
 
-(use-package aggressive-indent)
+;(use-package aggressive-indent)
 
 (use-package clj-refactor)
 
