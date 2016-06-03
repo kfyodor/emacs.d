@@ -124,6 +124,10 @@
 
 (use-package js2-mode
   :init
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  (setq js2-basic-offset 2)
+  (setq js-indent-level 2)
+  :config
   (add-hook 'js2-mode-hook 'my-disable-indent-tabs-mode))
 
 (use-package projectile
@@ -166,7 +170,9 @@
   :init
   (setq scss-compile-at-save nil))
 
-(use-package coffee-mode)
+(use-package coffee-mode
+  :init
+  (setq coffee-tab-width 2))
 
 (use-package slim-mode)
 
