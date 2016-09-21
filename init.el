@@ -1,13 +1,14 @@
 (require 'cl)
 (require 'package)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (setq package-pinned-packages
       '((init-loader          . "melpa-stable")
         (exec-path-from-shell . "melpa-stable")
         (diff-hl              . "melpa-stable")
+        (emmet-mode           . "melpa-stable")
         (smart-mode-line      . "melpa-stable")
         (smex                 . "melpa-stable")
         (browse-kill-ring     . "melpa-stable")
@@ -42,8 +43,6 @@
         (sbt-mode             . "melpa-stable")
         (yasnippet            . "melpa-stable")
         (idomenu              . "melpa-stable")
-        ;(aggressive-indent    . "melpa-stable")
-
         (sql-indent           . "melpa")
         (use-package          . "melpa")
         (undo-tree            . "melpa")
@@ -59,9 +58,8 @@
 	      (archive (cdr pinned-package)))
 	  (unless (package-installed-p package)
             (unless package-contents-refreshed
-              (setq package-contents-refreshed
-                (package-refresh-contents)
-                t))
+              (package-refresh-contents)
+              (setq package-contents-refreshed t))
 	    (message "Installing %s from %s" package archive)
 	    (package-install package))))
       package-pinned-packages)
@@ -85,7 +83,7 @@
   (setq sml/shorten-directory t)
   (setq sml/shorten-modes t)
   :config
-  (add-to-list 'sml/replacer-regexp-list '("^~/apps" ":a:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/apps" ":a:"))
   (sml/setup))
 
 (use-package smex
@@ -284,6 +282,12 @@
   :config
   (eval-after-load "sql"
     '(load-library "sql-indent")))
+
+(use-package emmet-mode
+  :init
+  (add-hook 'html-mode-hook 'emmet-mode)
+  (add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2))))
+
 
 (init-loader-load)
 (put 'downcase-region 'disabled nil)
