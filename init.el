@@ -156,6 +156,7 @@
 
 (use-package smartparens
   :init
+  (add-hook 'js-mode-hook 'smartparens-mode)
   (add-hook 'ruby-mode-hook 'smartparens-mode)
   (add-hook 'scala-mode-hook 'smartparens-mode))
 
