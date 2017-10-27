@@ -5,5 +5,8 @@
 (global-set-key (kbd "C-x C-m") 'imenu)
 ;; (global-set-key (kbd "C-,", 'execute-extended-command))
 
+(define-key dired-mode-map "i" 'dired-subtree-insert)
+(define-key dired-mode-map ";" 'dired-subtree-remove)
+
 (setq mac-command-modifier 'control)
 (setq mac-option-modifier 'meta)

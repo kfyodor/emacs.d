@@ -43,7 +43,9 @@
         (sbt-mode             . "melpa-stable")
         (yasnippet            . "melpa-stable")
         (idomenu              . "melpa-stable")
-        (sql-indent           . "melpa")
+        (dockerfile-mode      . "melpa-stable")
+        (dired-filter         . "melpa")
+        (dired-subtree        . "melpa")
         (use-package          . "melpa")
         (undo-tree            . "melpa")
         (indent-guide         . "melpa")
@@ -133,7 +135,12 @@
   :init
   (setq projectile-switch-project-action 'projectile-dired)
   :config
+  (add-to-list 'projectile-globally-ignored-directories "node_modules")
+  (add-to-list 'projectile-globally-ignored-file-suffixes "\.js\.map")
   (projectile-global-mode))
+
+(use-package dired-filter)
+(use-package dired-subtree)
 
 (use-package clojure-mode)
 
@@ -266,7 +273,10 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
-(use-package scala-mode2)
+(use-package scala-mode2
+  :init
+  (setq scala-indent:align-parameters t))
+
 (use-package sbt-mode)
 
 (use-package ensime
@@ -280,15 +290,17 @@
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 
 (use-package sql-indent
-  :pin melpa
   :config
-  (eval-after-load "sql"
-    '(load-library "sql-indent")))
+  (add-hook 'sql-mode-hook 'sqlind-minor-mode))
 
 (use-package emmet-mode
   :init
   (add-hook 'html-mode-hook 'emmet-mode)
   (add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2))))
+
+(use-package dockerfile-mode
+  :config
+  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 
 
 (init-loader-load)
