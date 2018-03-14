@@ -16,6 +16,7 @@
         (flx-ido              . "melpa-stable")
         (js2-mode             . "melpa-stable")
         (projectile           . "melpa-stable")
+        (go-mode              . "melpa-stable")
         (clojure-mode         . "melpa-stable")
         (clj-refactor         . "melpa-stable")
         (cider                . "melpa-stable")
@@ -39,11 +40,12 @@
         (yaml-mode            . "melpa-stable")
         (haml-mode            . "melpa-stable")
         (company              . "melpa-stable")
-        (scala-mode2          . "melpa-stable")
+        (scala-mode           . "melpa-stable")
         (sbt-mode             . "melpa-stable")
         (yasnippet            . "melpa-stable")
         (idomenu              . "melpa-stable")
         (dockerfile-mode      . "melpa-stable")
+        (alchemist            . "melpa-stable")
         (dired-filter         . "melpa")
         (dired-subtree        . "melpa")
         (use-package          . "melpa")
@@ -273,7 +275,7 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
-(use-package scala-mode2
+(use-package scala-mode
   :init
   (setq scala-indent:align-parameters t))
 
@@ -305,3 +307,18 @@
 
 (init-loader-load)
 (put 'downcase-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(coffee-tab-width 2)
+ '(package-selected-packages
+   (quote
+    (ensime highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

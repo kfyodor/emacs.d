@@ -52,3 +52,10 @@
   (go-let 2)
   (go-loop 2)
   (match 2))
+
+(setq cider-cljs-lein-repl
+	"(do (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))")
+
+(setq cider-pprint-fn `fipp)
