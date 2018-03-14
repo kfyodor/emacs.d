@@ -12,8 +12,9 @@
         (smart-mode-line      . "melpa-stable")
         (smex                 . "melpa-stable")
         (browse-kill-ring     . "melpa-stable")
-        (ido-vertical-mode    . "melpa-stable")
-        (flx-ido              . "melpa-stable")
+        (flx                  . "melpa-stable")
+        ;(ido-vertical-mode    . "melpa-stable")
+        ;(flx-ido              . "melpa-stable")
         (js2-mode             . "melpa-stable")
         (projectile           . "melpa-stable")
         (go-mode              . "melpa-stable")
@@ -52,7 +53,10 @@
         (undo-tree            . "melpa")
         (indent-guide         . "melpa")
         (highlight            . "melpa")
-        (ensime               . "melpa")))
+        (ensime               . "melpa")
+        (ivy                  . "melpa")
+        (counsel-projectile   . "melpa-stable")
+        (swiper               . "melpa-stable")))
 
 (package-initialize)
 (setq package-contents-refreshed nil)
@@ -98,24 +102,24 @@
 (use-package browse-kill-ring
   :config (browse-kill-ring-default-keybindings))
 
-(use-package idomenu)
+;(use-package idomenu)
 
-(use-package ido-vertical-mode)
+; (use-package ido-vertical-mode)
 
-(use-package flx-ido
-  :init
-  (setq ido-create-new-buffer 'always)
-  (setq ido-enable-flex-matching t)
-  (setq ido-enable-prefix nil)
-  (setq ido-max-prospects 8)
-  (setq ido-default-file-method 'selected-window)
-  (add-to-list 'ido-ignore-files "\\.DS_Store")
-  :config
-  (ido-mode t)
-  (icomplete-mode 1)
-  (ido-everywhere 1)
-  (flx-ido-mode 1)
-  (ido-vertical-mode 1))
+;; (use-package flx-ido
+;;   :init
+;;   (setq ido-create-new-buffer 'always)
+;;   (setq ido-enable-flex-matching t)
+;;   (setq ido-enable-prefix nil)
+;;   (setq ido-max-prospects 8)
+;;   (setq ido-default-file-method 'selected-window)
+;;   (add-to-list 'ido-ignore-files "\\.DS_Store")
+;;   :config
+;;   (ido-mode t)
+;;   (icomplete-mode 1)
+;;   (ido-everywhere 1)
+;;   (flx-ido-mode 1)
+;;   (ido-vertical-mode 1))
 
 (require 'cyberpunk-theme)
 
@@ -140,6 +144,17 @@
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (add-to-list 'projectile-globally-ignored-file-suffixes "\.js\.map")
   (projectile-global-mode))
+
+(use-package ivy
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t))
+
+(use-package counsel-projectile
+  :config
+  (counsel-projectile-mode))
+
+(use-package swiper)
 
 (use-package dired-filter)
 (use-package dired-subtree)
@@ -315,7 +330,7 @@
  '(coffee-tab-width 2)
  '(package-selected-packages
    (quote
-    (ensime highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))))
+    (counsel-projectile ivy ensime highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
