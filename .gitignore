@@ -2,10 +2,13 @@ auto-save-list
 elpa
 projectile*
 tramp
-ensime
 .#*
 url
 .DS_Store
 ido.last
 emojis
 /recentf
+.lsp*
+.cache
+.dap-*
+transient

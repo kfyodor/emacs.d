@@ -3,6 +3,7 @@
 (global-set-key (kbd "C-x o") 'win-switch-dispatch)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x C-m") 'imenu)
+(global-set-key (kbd "M-n") 'back-to-indentation)
 ;; (global-set-key (kbd "C-,", 'execute-extended-command))
 
 (define-key dired-mode-map "i" 'dired-subtree-insert)

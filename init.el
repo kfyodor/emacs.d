@@ -1,6 +1,7 @@
 (require 'cl)
 (require 'package)
 
+(add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
@@ -13,13 +14,14 @@
         (smex                 . "melpa-stable")
         (browse-kill-ring     . "melpa-stable")
         (flx                  . "melpa-stable")
-        ;(ido-vertical-mode    . "melpa-stable")
-        ;(flx-ido              . "melpa-stable")
+        ;(ido-vertical-mode   . "melpa-stable")
+        ;(flx-ido             . "melpa-stable")
         (js2-mode             . "melpa-stable")
         (projectile           . "melpa-stable")
         (go-mode              . "melpa-stable")
         (clojure-mode         . "melpa-stable")
         (clj-refactor         . "melpa-stable")
+        (queue                . "melpa")
         (cider                . "melpa-stable")
         (paredit              . "melpa-stable")
         (smartparens          . "melpa-stable")
@@ -35,7 +37,7 @@
         (git-gutter           . "melpa-stable")
         (ace-jump-mode        . "melpa-stable")
         (expand-region        . "melpa-stable")
-        (mic-paren            . "melpa-stable")
+        (mic-paren            . "melpa")
         (win-switch           . "melpa-stable")
         (ag                   . "melpa-stable")
         (yaml-mode            . "melpa-stable")
@@ -50,13 +52,20 @@
         (dired-filter         . "melpa")
         (dired-subtree        . "melpa")
         (use-package          . "melpa")
-        (undo-tree            . "melpa")
+        (undo-tree            . "elpa")
         (indent-guide         . "melpa")
         (highlight            . "melpa")
-        (ensime               . "melpa")
         (ivy                  . "melpa")
         (counsel-projectile   . "melpa-stable")
-        (swiper               . "melpa-stable")))
+        (swiper               . "melpa-stable")
+        (flycheck             . "melpa")
+        (lsp-mode             . "melpa-stable")
+        (lsp-metals           . "melpa-stable")
+        (lsp-ui               . "melpa-stable")
+        (company-lsp          . "melpa-stable")
+        (posframe             . "melpa-stable")
+        (dap-mode             . "melpa-stable")
+        (enh-ruby-mode        . "melpa")))
 
 (package-initialize)
 (setq package-contents-refreshed nil)
@@ -143,6 +152,8 @@
   :config
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (add-to-list 'projectile-globally-ignored-file-suffixes "\.js\.map")
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-global-mode))
 
 (use-package ivy
@@ -294,21 +305,51 @@
   :init
   (setq scala-indent:align-parameters t))
 
-(use-package sbt-mode)
-
-(use-package ensime
+(use-package sbt-mode
+  :commands sbt-start sbt-command
   :config
-  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-  :pin melpa)
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+   (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+(use-package lsp-mode
+  ;; Optional - enable lsp-mode automatically in scala files
+  :hook  (scala-mode . lsp)
+         (lsp-mode . lsp-lens-mode)
+  :config (setq lsp-prefer-flymake nil))
+
+(use-package lsp-metals)
+
+(use-package lsp-ui)
+
+(use-package posframe)
+
+(use-package company-lsp)
+
+(use-package dap-mode
+  :hook
+  (lsp-mode . dap-mode)
+  (lsp-mode . dap-ui-mode))
+
+;; (use-package lsp-treemacs
+;;   :config
+;;   (lsp-metals-treeview-enable t)
+;;   (setq lsp-metals-treeview-show-when-views-received t))
 
 (use-package yasnippet
   :config
   (yas-global-mode 1)
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 
-(use-package sql-indent
-  :config
-  (add-hook 'sql-mode-hook 'sqlind-minor-mode))
+;; (use-package sql-indent
+;;   :config
+;;   (add-hook 'sql-mode-hook 'sqlind-minor-mode))
 
 (use-package emmet-mode
   :init
@@ -319,6 +360,9 @@
   :config
   (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 
+;(use-package systemd
+;  :config
+;  (add-to-list 'auto-mode-alist '("//.service'" . systemd-mode)))
 
 (init-loader-load)
 (put 'downcase-region 'disabled nil)
@@ -330,7 +374,8 @@
  '(coffee-tab-width 2)
  '(package-selected-packages
    (quote
-    (counsel-projectile ivy ensime highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))))
+    (sql-indent counsel-projectile ivy highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode)))
+ '(sql-mode-hook (quote (sqlind-minor-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
