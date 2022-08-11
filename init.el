@@ -65,7 +65,8 @@
         (company-lsp          . "melpa-stable")
         (posframe             . "melpa-stable")
         (dap-mode             . "melpa-stable")
-        (enh-ruby-mode        . "melpa")))
+        (enh-ruby-mode        . "melpa")
+        (rbenv                . "melpa")))
 
 (package-initialize)
 (setq package-contents-refreshed nil)
@@ -189,10 +190,33 @@
 
 (use-package paredit)
 
+(use-package rbenv
+  :init
+  (setq rbenv-installation-dir "/usr/local/bin/rbenv")
+
+  :config
+  (global-rbenv-mode 1)
+  (rbenv-use-global))
+
+(use-package enh-ruby-mode
+  :interpreter
+  "ruby"
+
+  :mode
+  "\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'"
+
+  :config
+  (setq enh-ruby-program "~/.rbenv/versions/3.1.2/bin/ruby")
+  (setq enh-ruby-deep-indent-paren nil)
+  (setq enh-ruby-hanging-paren-deep-indent-level 2)
+
+  (remove-hook 'enh-ruby-mode-hook 'erm-define-faces))
+
 (use-package smartparens
   :init
   (add-hook 'js-mode-hook 'smartparens-mode)
   (add-hook 'ruby-mode-hook 'smartparens-mode)
+  (add-hook 'enh-ruby-mode-hook 'smartparens-mode)
   (add-hook 'scala-mode-hook 'smartparens-mode))
 
 (use-package rainbow-delimiters)
@@ -374,7 +398,7 @@
  '(coffee-tab-width 2)
  '(package-selected-packages
    (quote
-    (sql-indent counsel-projectile ivy highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode)))
+    (enh-ruby-mode rbenv sql-indent counsel-projectile ivy highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode)))
  '(sql-mode-hook (quote (sqlind-minor-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
