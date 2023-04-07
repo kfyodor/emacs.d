@@ -5,7 +5,7 @@
 
 
 
-;; (defadvice ruby-indent-line (after unindent-closing-paren activate)
+;; (defadvice enh-ruby-indent-line (after unindent-closing-paren activate)
 ;;   (let ((column (current-column))
 ;;         indent offset)
 ;;     (save-excursion
