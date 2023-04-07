@@ -1,101 +1,45 @@
-(require 'cl)
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+
 (require 'package)
 
-(add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-
-(setq package-pinned-packages
-      '((init-loader          . "melpa-stable")
-        (exec-path-from-shell . "melpa-stable")
-        (diff-hl              . "melpa-stable")
-        (emmet-mode           . "melpa-stable")
-        (smart-mode-line      . "melpa-stable")
-        (smex                 . "melpa-stable")
-        (browse-kill-ring     . "melpa-stable")
-        (flx                  . "melpa-stable")
-        ;(ido-vertical-mode   . "melpa-stable")
-        ;(flx-ido             . "melpa-stable")
-        (js2-mode             . "melpa-stable")
-        (projectile           . "melpa-stable")
-        (go-mode              . "melpa-stable")
-        (clojure-mode         . "melpa-stable")
-        (clj-refactor         . "melpa-stable")
-        (queue                . "melpa")
-        (cider                . "melpa-stable")
-        (paredit              . "melpa-stable")
-        (smartparens          . "melpa-stable")
-        (rainbow-delimiters   . "melpa-stable")
-        (rspec-mode           . "melpa-stable")
-        (scss-mode            . "melpa-stable")
-        (coffee-mode          . "melpa-stable")
-        (slim-mode            . "melpa-stable")
-        (markdown-mode        . "melpa-stable")
-        (haskell-mode         . "melpa-stable")
-        (hi2                  . "melpa-stable")
-        (magit                . "melpa-stable")
-        (git-gutter           . "melpa-stable")
-        (ace-jump-mode        . "melpa-stable")
-        (expand-region        . "melpa-stable")
-        (mic-paren            . "melpa")
-        (win-switch           . "melpa-stable")
-        (ag                   . "melpa-stable")
-        (yaml-mode            . "melpa-stable")
-        (haml-mode            . "melpa-stable")
-        (company              . "melpa-stable")
-        (scala-mode           . "melpa-stable")
-        (sbt-mode             . "melpa-stable")
-        (yasnippet            . "melpa-stable")
-        (idomenu              . "melpa-stable")
-        (dockerfile-mode      . "melpa-stable")
-        (alchemist            . "melpa-stable")
-        (dired-filter         . "melpa")
-        (dired-subtree        . "melpa")
-        (use-package          . "melpa")
-        (undo-tree            . "elpa")
-        (indent-guide         . "melpa")
-        (highlight            . "melpa")
-        (ivy                  . "melpa")
-        (counsel-projectile   . "melpa-stable")
-        (swiper               . "melpa-stable")
-        (flycheck             . "melpa")
-        (lsp-mode             . "melpa-stable")
-        (lsp-metals           . "melpa-stable")
-        (lsp-ui               . "melpa-stable")
-        (company-lsp          . "melpa-stable")
-        (posframe             . "melpa-stable")
-        (dap-mode             . "melpa-stable")
-        (enh-ruby-mode        . "melpa")
-        (rbenv                . "melpa")
-        (rubocop              . "melpa-stable")))
-
 (package-initialize)
-(setq package-contents-refreshed nil)
 
-(mapc (lambda (pinned-package)
-	(let ((package (car pinned-package))
-	      (archive (cdr pinned-package)))
-	  (unless (package-installed-p package)
-            (unless package-contents-refreshed
-              (package-refresh-contents)
-              (setq package-contents-refreshed t))
-	    (message "Installing %s from %s" package archive)
-	    (package-install package))))
-      package-pinned-packages)
+(add-to-list 'package-archives
+             '("elpa" . "http://elpa.gnu.org/packages/") t)
 
-(add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
+(when (not (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 (require 'use-package)
 
-(use-package init-loader)
+(setq use-package-always-pin "melpa-stable")
+
+(add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
+
+(use-package init-loader
+  :ensure t
+  :init
+  (setq init-loader-show-log-after-init nil))
 
 (use-package exec-path-from-shell
+  :ensure t
   :config
   (exec-path-from-shell-initialize))
 
-(use-package diff-hl)
+(use-package diff-hl
+  :ensure t)
 
 (use-package smart-mode-line
+  :ensure t
   :init
   (setq sml/no-confirm-load-theme t)
   (setq sml/theme 'dark)
@@ -106,12 +50,15 @@
   (sml/setup))
 
 (use-package smex
+  :ensure t
   :bind
   (("M-x" . smex)
    ("C-x m" . smex)))
 
 (use-package browse-kill-ring
-  :config (browse-kill-ring-default-keybindings))
+  :ensure t
+  :config
+  (browse-kill-ring-default-keybindings))
 
 ;(use-package idomenu)
 
@@ -133,13 +80,14 @@
 ;;   (ido-vertical-mode 1))
 
 (require 'cyberpunk-theme)
-
+;; [TODO] ???
 (defun my-disable-indent-tabs-mode ()
   (set-variable 'indent-tabs-mode nil))
-
 (add-hook 'prog-mode-hook 'my-disable-indent-tabs-mode)
 
+
 (use-package js2-mode
+  :ensure t
   :init
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (add-to-list 'auto-mode-alist '("\\.avsc\\'" . js2-mode))
@@ -149,6 +97,7 @@
   (add-hook 'js2-mode-hook 'my-disable-indent-tabs-mode))
 
 (use-package projectile
+  :ensure t
   :init
   (setq projectile-switch-project-action 'projectile-dired)
   :config
@@ -159,26 +108,80 @@
   (projectile-global-mode))
 
 (use-package ivy
+  :ensure t
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t))
 
 (use-package counsel-projectile
+  :ensure t
   :config
   (counsel-projectile-mode))
 
-(use-package swiper)
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
 
-(use-package dired-filter)
-(use-package dired-subtree)
+(use-package ag
+  :ensure t)
 
-(use-package clojure-mode)
+(use-package swiper
+  :ensure t)
 
-;(use-package aggressive-indent)
+(use-package ace-jump-mode
+  :ensure t
+  :bind ("C-o" . ace-jump-mode))
 
-(use-package clj-refactor)
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+
+(use-package mic-paren
+  :ensure t
+  :pin "melpa"
+  :config
+  (paren-activate)
+  (add-hook 'after-init-hook
+	    (lambda () (set-face-background 'paren-face-match "DeepPink3"))))
+
+(use-package volatile-highlights
+  :ensure t
+  :pin "melpa"
+  :config
+  (volatile-highlights-mode t))
+
+(use-package rainbow-delimiters
+  :ensure t)
+
+(use-package undo-tree
+  :ensure t
+  :pin "elpa")
+
+(use-package indent-guide
+  :ensure t
+  :init
+  (setq indent-guide-recursive t))
+
+;; (use-package dired-filter)
+;; (use-package dired-subtree)
+
+;; Clojure:
+
+(use-package clojure-mode
+  :ensure t)
+
+(use-package clj-refactor
+  :ensure t)
+
+;; (use-package aggressive-indent)
+
+(use-package paredit
+  :ensure t)
+
 
 (use-package cider
+  :ensure t
   :init
   (add-hook 'clojure-mode-hook #'cider-mode)
   :config
@@ -189,73 +192,119 @@
   (cider-repl-toggle-pretty-printing)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
-(use-package paredit)
+;; Ruby:
 
 (use-package rbenv
+  :ensure t
+  :pin "melpa"
   :init
-  (setq rbenv-installation-dir "/usr/local/bin/rbenv")
+  (setq rbenv-installation-dir "~/.rbenv")
 
   :config
   (global-rbenv-mode 1)
   (rbenv-use-global))
 
 (use-package enh-ruby-mode
-  :interpreter
-  "ruby"
-
+  :ensure t
+  :pin "melpa"
+  :interpreter "ruby"
   :mode
   "\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'"
 
   :config
   (setq enh-ruby-program "~/.rbenv/versions/3.1.3/bin/ruby")
   (setq enh-ruby-deep-indent-paren nil)
-  (setq enh-ruby-deep-indent-construct nil)
+  (setq enh-ruby-deep-indent-construct t)
+  (setq enh-ruby-deep-indent-paren t)
   (setq enh-ruby-hanging-brace-deep-indent-level 0)
-  (setq enh-ruby-hanging-brace-indent-level: 2)
+  (setq enh-ruby-hanging-brace-indent-level 2)
   (setq enh-ruby-hanging-indent-level 2)
   (setq enh-ruby-hanging-paren-deep-indent-level 0)
   (setq enh-ruby-hanging-paren-indent-level 2)
+  (setq enh-ruby-indent-level 2)
+  (setq enh-ruby-indent-tabs-mode nil)
 
   (remove-hook 'enh-ruby-mode-hook 'erm-define-faces))
 
+(use-package rspec-mode
+  :ensure t)
+
+(use-package rubocop
+  :ensure t
+  :config
+  (add-hook 'enh-ruby-mode-hook #'rubocop-mode))
+
 (use-package smartparens
+  :ensure t
   :init
   (add-hook 'js-mode-hook 'smartparens-mode)
   (add-hook 'ruby-mode-hook 'smartparens-mode)
   (add-hook 'enh-ruby-mode-hook 'smartparens-mode)
   (add-hook 'scala-mode-hook 'smartparens-mode))
 
-(use-package rainbow-delimiters)
-
-(use-package undo-tree)
-
-(use-package rspec-mode)
-
-(use-package scss-mode
-  :init
-  (setq scss-compile-at-save nil))
-
-(use-package coffee-mode
-  :init
-  (setq coffee-tab-width 2))
-
-(use-package slim-mode)
-
-(use-package markdown-mode)
+;; Other langs and major modes:
 
 (use-package haskell-mode
+  :ensure t
   :config
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode))
 
 (use-package hi2
+  :ensure t
   :config
   (add-hook 'haskell-mode-hook 'turn-on-hi2))
 
-(use-package indent-guide
+(use-package yaml-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
+
+(use-package scala-mode
+  :ensure t
   :init
-  (setq indent-guide-recursive t))
+  (setq scala-indent:align-parameters t))
+
+(use-package sbt-mode
+  :ensure t
+  :commands sbt-start sbt-command
+  :config
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+  (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+(use-package dockerfile-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+
+(use-package make-mode
+  :init
+  (add-hook 'makefile-mode-hook
+            (lambda () (setq indent-tabs-mode t))))
+
+(use-package markdown-mode
+  :ensure t)
+
+(use-package systemd
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("//.service'" . systemd-mode)))
+
+;; Misc:
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode)
+  :config (add-hook 'enh-ruby-mode-hook
+                    (lambda ()
+                      (setq-local flycheck-command-wrapper-function
+                                  (lambda (command) (append '("bundle" "exec") command))))))
 
 (use-package magit
+  :ensure t
   :init
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
@@ -266,6 +315,7 @@
 	      (auto-fill-mode 1))))
 
 (use-package git-gutter
+  :ensure t
   :init
   (setq git-gutter:window-width 2)
   (setq git-gutter:modified-sign "~ ")
@@ -275,24 +325,12 @@
   (global-git-gutter-mode t)
   (git-gutter:linum-setup))
 
-(use-package ace-jump-mode
-  :bind ("C-o" . ace-jump-mode))
+;; (use-package highlight)
 
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
 
-(use-package mic-paren
-  :config
-  (paren-activate)
-  (add-hook 'after-init-hook
-	    (lambda () (set-face-background 'paren-face-match "DeepPink3"))))
-
-(require 'volatile-highlights)
-(volatile-highlights-mode t)
-
-(use-package highlight)
-
+;; [TODO] Do I use it???
 (use-package win-switch
+  :ensure t
   :config
   (setq win-switch-feedback-background-color "DeepPink3")
   (setq win-switch-feedback-foreground-color "black")
@@ -315,100 +353,58 @@
   (win-switch-set-keys '() 'delete-window)
   (win-switch-set-keys '("\M-\C-g") 'emergency-exit))
 
-(use-package ag)
+;; Markdown live preview in Browser
+;; (require 'livedown)
 
-(require 'livedown)
+;; (use-package lsp-mode
+;;   ;; Optional - enable lsp-mode automatically in scala files
+;;   :hook  (scala-mode . lsp)
+;;          (lsp-mode . lsp-lens-mode)
+;;   :config (setq lsp-prefer-flymake nil))
 
-(use-package yaml-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
+;; (use-package lsp-metals
+;;   :ensure t)
 
-(use-package haml-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode)))
+;; (use-package lsp-ui
+;;   :ensure t)
 
-(use-package company
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
+;; (use-package posframe
+;;   :ensure t)
 
-(use-package scala-mode
-  :init
-  (setq scala-indent:align-parameters t))
+;; (use-package company-lsp
+;;   :ensure t)
 
-(use-package sbt-mode
-  :commands sbt-start sbt-command
-  :config
-  (substitute-key-definition
-   'minibuffer-complete-word
-   'self-insert-command
-   minibuffer-local-completion-map)
-   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-  (setq sbt:program-options '("-Dsbt.supershell=false")))
+;; (use-package dap-mode
+;;   :ensure t
+;;   :hook
+;;   (lsp-mode . dap-mode)
+;;   (lsp-mode . dap-ui-mode))
 
-(use-package rubocop
-  :config
-  (add-hook 'enh-ruby-mode-hook #'rubocop-mode))
-
-(use-package flycheck
-  :init (global-flycheck-mode)
-  :config (add-hook 'enh-ruby-mode-hook
-                    (lambda ()
-                      (setq-local flycheck-command-wrapper-function
-                                  (lambda (command) (append '("bundle" "exec") command))))))
-
-(use-package lsp-mode
-  ;; Optional - enable lsp-mode automatically in scala files
-  :hook  (scala-mode . lsp)
-         (lsp-mode . lsp-lens-mode)
-  :config (setq lsp-prefer-flymake nil))
-
-(use-package lsp-metals)
-
-(use-package lsp-ui)
-
-(use-package posframe)
-
-(use-package company-lsp)
-
-(use-package dap-mode
-  :hook
-  (lsp-mode . dap-mode)
-  (lsp-mode . dap-ui-mode))
-
-;; (use-package lsp-treemacs
-;;   :config
-;;   (lsp-metals-treeview-enable t)
-;;   (setq lsp-metals-treeview-show-when-views-received t))
-
+;; Do I use it?
 (use-package yasnippet
+  :ensure t
   :config
   (yas-global-mode 1)
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 
-;; (use-package sql-indent
-;;   :config
-;;   (add-hook 'sql-mode-hook 'sqlind-minor-mode))
-
-(use-package emmet-mode
-  :init
-  (add-hook 'html-mode-hook 'emmet-mode)
-  (add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2))))
-
-(use-package dockerfile-mode
+(use-package ligature
+  :ensure t
+  :pin "melpa"
   :config
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
-
-(use-package make-mode
-  :init
-  (add-hook 'makefile-mode-hook
-            (lambda () (setq indent-tabs-mode t))))
-
-;(use-package systemd
-;  :config
-;  (add-to-list 'auto-mode-alist '("//.service'" . systemd-mode)))
+  (ligature-set-ligatures 't '("www"))
+  (ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+                                     ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+                                     "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+                                     "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+                                     "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+                                     "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+                                     "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+                                     "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+                                     "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+                                     "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+  (global-ligature-mode t))
 
 (init-loader-load)
-(put 'downcase-region 'disabled nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -416,9 +412,8 @@
  ;; If there is more than one, they won't work right.
  '(coffee-tab-width 2)
  '(package-selected-packages
-   (quote
-    (rubocop enh-ruby-mode rbenv sql-indent counsel-projectile ivy highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode)))
- '(sql-mode-hook (quote (sqlind-minor-mode))))
+   '(ligature systemd volatile-highlights rubocop enh-ruby-mode rbenv sql-indent counsel-projectile ivy highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))
+ '(sql-mode-hook '(sqlind-minor-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
