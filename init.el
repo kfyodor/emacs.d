@@ -60,31 +60,7 @@
   :config
   (browse-kill-ring-default-keybindings))
 
-;(use-package idomenu)
-
-; (use-package ido-vertical-mode)
-
-;; (use-package flx-ido
-;;   :init
-;;   (setq ido-create-new-buffer 'always)
-;;   (setq ido-enable-flex-matching t)
-;;   (setq ido-enable-prefix nil)
-;;   (setq ido-max-prospects 8)
-;;   (setq ido-default-file-method 'selected-window)
-;;   (add-to-list 'ido-ignore-files "\\.DS_Store")
-;;   :config
-;;   (ido-mode t)
-;;   (icomplete-mode 1)
-;;   (ido-everywhere 1)
-;;   (flx-ido-mode 1)
-;;   (ido-vertical-mode 1))
-
 (require 'cyberpunk-theme)
-;; [TODO] ???
-(defun my-disable-indent-tabs-mode ()
-  (set-variable 'indent-tabs-mode nil))
-(add-hook 'prog-mode-hook 'my-disable-indent-tabs-mode)
-
 
 (use-package js2-mode
   :ensure t
@@ -103,20 +79,70 @@
   :config
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (add-to-list 'projectile-globally-ignored-file-suffixes "\.js\.map")
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-global-mode))
 
-(use-package ivy
+(use-package vertico
   :ensure t
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t))
+  :pin "elpa"
+  :init
+  (vertico-mode))
 
-(use-package counsel-projectile
+(use-package emacs
+  :init
+  ;; Add prompt indicator to `completing-read-multiple'.
+  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+  (defun crm-indicator (args)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers.
+  (setq read-extended-command-predicate
+        #'command-completion-default-include-p)
+
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t))
+
+(use-package marginalia
   :ensure t
+  :custom
+  (marginalia-align 'right)
+  :init
+  (marginalia-mode))
+
+(use-package consult
+  :ensure t
+  :bind
+  (("M-x" . execute-extended-command)
+   ("C-s" . consult-line)
+   ("C-x b" . consult-buffer))
   :config
-  (counsel-projectile-mode))
+  (autoload 'projectile-project-root "projectile")
+  (setq consult-project-function (lambda (_) (projectile-project-root))))
+
+(use-package consult-projectile
+  :ensure t
+  :pin "melpa"
+  :bind
+  ("C-c p p" . consult-projectile)
+  ("C-c p f" . consult-projectile)
+  ("C-c p s s" . consult-ripgrep))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package company
   :ensure t
@@ -124,9 +150,6 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package ag
-  :ensure t)
-
-(use-package swiper
   :ensure t)
 
 (use-package ace-jump-mode
@@ -412,7 +435,7 @@
  ;; If there is more than one, they won't work right.
  '(coffee-tab-width 2)
  '(package-selected-packages
-   '(ligature systemd volatile-highlights rubocop enh-ruby-mode rbenv sql-indent counsel-projectile ivy highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))
+   '(consult-ag ligature systemd volatile-highlights rubocop enh-ruby-mode rbenv sql-indent counsel-projectile highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))
  '(sql-mode-hook '(sqlind-minor-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

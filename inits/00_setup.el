@@ -3,6 +3,13 @@
 ;;; Code:
 
 (require 'sql)
+(require 'dired)
+
+(defun my-disable-indent-tabs-mode ()
+  (set-variable 'indent-tabs-mode nil))
+
+(add-hook 'prog-mode-hook 'my-disable-indent-tabs-mode)
+
 
 (eval-after-load "sql"
   '(progn
@@ -13,6 +20,9 @@
 (setq select-enable-clipboard t)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired nil))
 
 ;; Force splitting windows horizontally
 ;; (setq split-height-threshold nil)
