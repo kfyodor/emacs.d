@@ -138,6 +138,26 @@
   ("C-c p f" . consult-projectile)
   ("C-c p s s" . consult-ripgrep))
 
+(use-package embark
+  :ensure t
+  :bind
+  (("C-." . embark-act)
+   ("M-." . embark-dwim)
+   ("C-h B" . embark-bindings))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package orderless
   :ensure t
   :custom
@@ -246,6 +266,8 @@
   (setq enh-ruby-hanging-paren-indent-level 2)
   (setq enh-ruby-indent-level 2)
   (setq enh-ruby-indent-tabs-mode nil)
+
+  (add-hook 'enh-ruby-mode-hook 'robe-mode)
 
   (remove-hook 'enh-ruby-mode-hook 'erm-define-faces))
 
@@ -435,7 +457,7 @@
  ;; If there is more than one, they won't work right.
  '(coffee-tab-width 2)
  '(package-selected-packages
-   '(consult-ag ligature systemd volatile-highlights rubocop enh-ruby-mode rbenv sql-indent counsel-projectile highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))
+   '(embark-consult embark robe-mode consult-ag ligature systemd volatile-highlights rubocop enh-ruby-mode rbenv sql-indent counsel-projectile highlight indent-guide undo-tree use-package dired-subtree dired-filter dockerfile-mode idomenu sbt-mode scala-mode yaml-mode win-switch smex smartparens smart-mode-line slim-mode scss-mode rspec-mode rainbow-delimiters projectile mic-paren markdown-mode magit js2-mode init-loader ido-vertical-mode hi2 haskell-mode haml-mode go-mode git-gutter flx-ido expand-region exec-path-from-shell emmet-mode diff-hl company coffee-mode clj-refactor browse-kill-ring ag ace-jump-mode))
  '(sql-mode-hook '(sqlind-minor-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
